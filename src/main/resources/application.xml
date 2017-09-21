@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- 启用注解解析器 -->
+    <context:annotation-config />
+    <!-- 因为采用了混合解析方式( 有一部分配置在xml中,有一部分在java类中，所以要让spring的注解解析器去扫描包 -->
+    <context:component-scan base-package="com.sjs" />
+    <!-- 启用aspectj的注解方式的代理 -->
+    <aop:aspectj-autoproxy />
+    
+    <bean id="httpAction" name="httpAction" class="com.sjs.action.HttpAction">
+    </bean>
+    
+    <import resource="jedis/spring-jedis-cluster.xml"/>
+</beans>

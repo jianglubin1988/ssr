@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <constant name="struts.devMode" value="true"></constant>  
+    <constant name="struts.i18n.encoding" value="UTF-8"></constant> 
+    <constant name="struts.locale" value="zh_CN"></constant> 
+    
+    <package name="system" extends="struts-default" namespace="/system">
+	  <!-- 配置应用所需要的拦截器 -->
+	  <interceptors>
+	   <!-- 全局异常拦截 -->
+	   <interceptor name="cmos-logger"
+	    	class="com.cmos.core.logger.interceptor.Strut2LoggerInterceptor">
+	   </interceptor>
+	   <!-- 拦截器栈的配置 -->
+	   <interceptor-stack name="systemInterceptorStack">
+	    <interceptor-ref name="cmos-logger" />
+	   </interceptor-stack>
+	  </interceptors>
+	
+	  <!-- 默认拦截器配置 覆盖struts2中的默认拦截器 -->
+	  <default-interceptor-ref name="systemInterceptorStack"></default-interceptor-ref>
+	
+	  <!-- 全局结果 -->
+	  <global-results>
+	   <result name="error">/error.jsp</result>
+	   <result name="index" type="redirect">/index.jsp</result>
+	  </global-results>
+	
+	  <!-- 全局异常 -->
+	  <global-exception-mappings>
+	   <exception-mapping exception="java.lang.Exception" result="error">
+	   </exception-mapping>
+	  </global-exception-mappings>
+	  <!-- end  -->
+ 	</package>
+
+    <package name="main" extends="system">
+        <action name="test" class="httpAction" method="execute"></action>
+        <action name="set" class="httpAction" method="set"></action>
+        <action name="get" class="httpAction" method="get"></action>
+        <action name="csf" class="httpAction" method="csfService"></action>
+        <action name="csfweb" class="httpAction" method="csfweb">
+        	<result>/index.jsp</result>
+        </action>
+        <action name="temp" class="httpAction" method="tempTest">
+        	<result>/index.jsp</result>
+        </action>
+        <action name="index" class="httpAction" method="index">
+        	<result>/index.jsp</result>
+        </action>
+    </package>
+    
+</struts>
